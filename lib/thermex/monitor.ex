@@ -2,6 +2,7 @@ defmodule Thermex.Monitor do
   use GenServer
   require Logger
   @check_interval 500
+  @pg2_group :thermex_measurements
 
   def start_link(sensor_file) do
     GenServer.start_link(__MODULE__, sensor_file)
@@ -9,6 +10,7 @@ defmodule Thermex.Monitor do
 
   def init(sensor_file) do
     serial_number = parse_serial_number_from_filename(sensor_file)
+    :pg2.create(@pg2_group)
     {:ok, %{path: sensor_file, serial: serial_number}, @check_interval}
   end
 
@@ -50,7 +52,7 @@ defmodule Thermex.Monitor do
   end
 
   def publish_measurement(serial, temperature, timestamp) do
-    for pid <- :pg2.get_members(:thermex_measurements) do
+    for pid <- :pg2.get_members(@pg2_group) do
       send(pid, {serial, temperature, timestamp})
     end
   end
