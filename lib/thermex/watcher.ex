@@ -12,8 +12,7 @@ defmodule Thermex.Watcher do
   end
 
   def handle_info(:check_for_devices, state) do
-    Logger.debug "I need to check for devices at #{base_path}"
-    Logger.debug "okay, lets look at #{inspect look_for_sensor_files}"
+    Enum.each(look_for_sensor_files, &ensure_sensor_watched/1)
     {:noreply, state}
   end
   def handle_info(msg, state) do
@@ -24,6 +23,11 @@ defmodule Thermex.Watcher do
   defp base_path do
     Application.get_env(:thermex, :base_path)
   end
+
+  defp ensure_sensor_watched(sensor_file) do
+    IO.puts "let's make sure #{sensor_file} is being watched"
+  end
+
   defp look_for_sensor_files do
     with {:ok, dirs} <- File.ls(base_path),
                 dirs <- Enum.filter(dirs, &( String.starts_with?(&1, "28-") )),
