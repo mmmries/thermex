@@ -11,6 +11,7 @@ use Mix.Config
 # You can configure for your application as:
 #
 #     config :thermex, key: :value
+config :thermex, :base_path, Path.join([__DIR__, "..", "test", "fixtures"])
 #
 # And access this configuration in your application as:
 #
