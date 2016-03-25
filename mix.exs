@@ -3,6 +3,7 @@ defmodule Thermex.Mixfile do
 
   def project do
     [app: :thermex,
+     description: "An OTP application for watching temperature sensors",
      version: "0.0.1",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
