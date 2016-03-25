@@ -14,8 +14,12 @@ defmodule Thermex.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger],
-     mod: {Thermex, []}]
+    [
+      applications: [:logger],
+      mod: {Thermex, []},
+      env: [base_path: "/sys/bus/w1/devices"],
+      registered: [:thermex],
+    ]
   end
 
   # Dependencies can be Hex packages:

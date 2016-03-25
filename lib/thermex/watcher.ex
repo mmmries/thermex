@@ -12,11 +12,15 @@ defmodule Thermex.Watcher do
   end
 
   def handle_info(:check_for_devices, state) do
-    Logger.debug "I need to check for devices"
+    Logger.debug "I need to check for devices at #{base_path}"
     {:noreply, state}
   end
   def handle_info(msg, state) do
     Logger.error "#{__MODULE__} received unexpected message", msg
     {:noreply, state}
+  end
+
+  defp base_path do
+    Application.get_env(:thermex, :base_path)
   end
 end
