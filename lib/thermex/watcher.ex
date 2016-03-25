@@ -25,7 +25,7 @@ defmodule Thermex.Watcher do
   end
 
   defp ensure_sensor_watched(sensor_file) do
-    IO.puts "let's make sure #{sensor_file} is being watched"
+    Thermex.MonitorSupervisor.ensure_monitor_running_for(sensor_file)
   end
 
   defp look_for_sensor_files do

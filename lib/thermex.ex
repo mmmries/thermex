@@ -7,6 +7,7 @@ defmodule Thermex do
     import Supervisor.Spec, warn: false
 
     children = [
+      supervisor(Thermex.MonitorSupervisor, []),
       worker(Thermex.Watcher, []),
     ]
 
