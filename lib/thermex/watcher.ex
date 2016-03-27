@@ -12,7 +12,11 @@ defmodule Thermex.Watcher do
   end
 
   def handle_info(:check_for_devices, state) do
-    Enum.each(look_for_sensor_files, &ensure_sensor_watched/1)
+    case look_for_sensor_files do
+      dirs when is_list(dirs) ->
+        Enum.each(dirs, &ensure_sensor_watched/1)
+      _ -> :no_sensors_found
+    end
     {:noreply, state}
   end
   def handle_info(msg, state) do
