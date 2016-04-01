@@ -15,7 +15,12 @@ defmodule Thermex.Monitor do
   end
 
   def handle_info(:timeout, %{path: path, serial: serial}=state) do
-    publish_measurement(serial, read_temperature(path), :os.system_time(:milli_seconds))
+    case read_temperature(path) do
+      {:ok, temperature} ->
+        publish_to_group({serial, temperature, :os.system_time(:milli_seconds)})
+      {:error, error} ->
+        publish_to_group({serial, {:error, error}, :os.system_time(:milli_seconds)})
+    end
     {:noreply, state, @check_interval}
   end
   def handle_info(msg, state) do
@@ -31,29 +36,14 @@ defmodule Thermex.Monitor do
   end
 
   defp read_temperature(filename) do
-    lines = filename
-    |> File.stream!
-    |> Stream.map(&String.strip/1)
-    |> Enum.take(2)
-
-    {temperature, _} = parse_temperature(List.first(lines), List.last(lines))
-    temperature / 1000
+    filename
+    |> File.read!
+    |> Thermex.Parser.parse
   end
 
-  defp parse_temperature(first_string, second_string) do
-    cond do
-      String.ends_with?(first_string, "YES") ->
-        String.split(second_string, "=")
-        |> List.last
-        |> Integer.parse
-      true ->
-        nil
-    end
-  end
-
-  def publish_measurement(serial, temperature, timestamp) do
+  def publish_to_group(payload) do
     for pid <- :pg2.get_members(@pg2_group) do
-      send(pid, {serial, temperature, timestamp})
+      send(pid, payload)
     end
   end
 end
