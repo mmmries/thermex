@@ -1,8 +1,8 @@
 defmodule Thermex.Parser do
   def parse(reading) do
     reading
+    |> String.strip
     |> String.split("\n")
-    |> Enum.map(&String.strip/1)
     |> parse_temperature
   end
 
