@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/mmmries/thermex.svg?branch=master)](https://travis-ci.org/mmmries/thermex)
 
-[![hex.pm](http://img.shields.io/badge/hex.pm-0.1.0-brightgreen.svg)](https://hex.pm/packages/thermex)
+[![Hex Version](http://img.shields.io/hexpm/v/thermex.svg)](https://hex.pm/packages/thermex)
 
 # Thermex
 
