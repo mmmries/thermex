@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/mmmries/thermex.svg?branch=master)](https://travis-ci.org/mmmries/thermex)
-
 [![Hex Version](http://img.shields.io/hexpm/v/thermex.svg)](https://hex.pm/packages/thermex)
 
 # Thermex
