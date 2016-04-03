@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/mmmries/thermex.svg?branch=master)](https://travis-ci.org/mmmries/thermex)
 
+[![hex.pm](http://img.shields.io/badge/hex.pm-0.1.0-brightgreen.svg)](https://hex.pm/packages/thermex)
+
 # Thermex
 
 An OTP application that watches for temperature sensors and monitors their readings.
